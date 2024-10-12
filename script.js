@@ -1,5 +1,6 @@
 // Daten zur Speicherung in localStorage
 let imagePositions = JSON.parse(localStorage.getItem("imagePositions")) || {};
+console.log("Geladene Positionen aus localStorage:", imagePositions); // Debugging: Überprüfe die geladenen Positionen
 
 document.addEventListener("DOMContentLoaded", () => {
   const imageContainer = document.getElementById("image-container");
@@ -7,14 +8,28 @@ document.addEventListener("DOMContentLoaded", () => {
   const resetButton = document.getElementById("reset-button");
 
   // Bilddaten laden (Beispiel-Bilder)
-  const images = ["img1.png", "img2.png", "img3.png", "img4.png", "img5.png", "img6.png", "img7.png", "img8.png", "img9.png", "img10.png", "img11.png"]; // Pfade zu den Bilddateien
+  const images = [
+    "img1.png",
+    "img2.png",
+    "img3.png",
+    "img4.png",
+    "img5.png",
+    "img6.png",
+    "img7.png",
+    "img8.png",
+    "img9.png",
+    "img10.png",
+    "img11.png",
+  ]; // Pfade zu den Bilddateien
 
   // Bilder in den Container laden
-  images.forEach((imgSrc) => {
+  images.forEach((imageName) => {
     const img = document.createElement("img");
-    img.src = imgSrc;
+    img.src = `images/${imageName}`;
+    img.alt = imageName;
     img.draggable = true;
-    img.id = imgSrc;
+    // Setze die ID ohne Dateiendung (oder mit einem Ersatz für den Punkt)
+    img.id = imageName.replace(/\./g, "_");
     img.addEventListener("dragstart", handleDragStart);
     imageContainer.appendChild(img);
   });
@@ -54,6 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Entferne die Position des Bildes aus dem localStorage
       delete imagePositions[id];
       localStorage.setItem("imagePositions", JSON.stringify(imagePositions));
+      console.log("Gespeicherte Positionen:", imagePositions); // Debugging: Überprüfe die gespeicherten Positionen
     }
     // Überprüfen, ob auf ein Bild im Bildcontainer gedroppt wurde
     else if (
@@ -66,6 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Entferne die Position des Bildes aus dem localStorage
       delete imagePositions[id];
       localStorage.setItem("imagePositions", JSON.stringify(imagePositions));
+      console.log("Gespeicherte Positionen:", imagePositions); // Debugging: Überprüfe die gespeicherten Positionen
     }
     // Überprüfen, ob das Ziel eine "tier"-Klasse hat
     else if (event.target.classList.contains("tier-content")) {
@@ -74,6 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Position speichern
       imagePositions[id] = event.target.dataset.tier;
       localStorage.setItem("imagePositions", JSON.stringify(imagePositions));
+      console.log("Gespeicherte Positionen:", imagePositions); // Debugging: Überprüfe die gespeicherten Positionen
     }
     // Überprüfen, ob auf ein Bild in der Tierlist gedroppt wurde
     else if (event.target.tagName.toLowerCase() === "img") {
@@ -84,6 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Position speichern
         imagePositions[id] = parentTier.dataset.tier;
         localStorage.setItem("imagePositions", JSON.stringify(imagePositions));
+        console.log("Gespeicherte Positionen:", imagePositions); // Debugging: Überprüfe die gespeicherten Positionen
       }
     } else {
       console.log("Ungültiges Drop-Ziel");
@@ -93,8 +112,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function restorePositions() {
     for (const [id, tier] of Object.entries(imagePositions)) {
-      const img = document.getElementById(id);
-      const tierElement = document.querySelector(`.tier-content[data-tier="${tier}"]`);
+      const img = document.getElementById(id.replace(/\./g, "_")); // IDs ohne Punkt verwenden
+      const tierElement = document.querySelector(
+        `.tier-content[data-tier="${tier}"]`
+      );
       if (tierElement && img) {
         tierElement.appendChild(img);
       }
@@ -104,7 +125,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function resetTierlist() {
     // Alle Bilder zurück in den Container
     images.forEach((imgSrc) => {
-      const img = document.getElementById(imgSrc);
+      const img = document.getElementById(imgSrc.replace(/\./g, "_"));
       imageContainer.appendChild(img);
     });
     // Speicher löschen

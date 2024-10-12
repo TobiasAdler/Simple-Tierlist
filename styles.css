@@ -48,9 +48,9 @@ img {
   min-width: 100px;
   min-height: 100px;
   height: auto;
-  background-color: #EA1C1C;
+  background-color: #ea1c1c;
   color: white;
-  font-size: 24px;
+  font-size: 36px;
   font-weight: bold;
   display: flex;
   justify-content: center;
@@ -58,19 +58,19 @@ img {
   padding: 10px;
 }
 .tier-row[data-tier="A"] .tier-label {
-  background-color: #D88100;
+  background-color: #d88100;
 }
 .tier-row[data-tier="B"] .tier-label {
-  background-color: #ECAA00;
+  background-color: #ecaa00;
 }
 .tier-row[data-tier="C"] .tier-label {
-  background-color: #E0D80A;
+  background-color: #e0d80a;
 }
 .tier-row[data-tier="D"] .tier-label {
-  background-color: #A7BA80;
+  background-color: #a7ba80;
 }
 .tier-row[data-tier="E"] .tier-label {
-  background-color: #80ACBA;
+  background-color: #80acba;
 }
 
 .tier-content {
