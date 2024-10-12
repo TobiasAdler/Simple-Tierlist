@@ -3,11 +3,11 @@ let imagePositions = JSON.parse(localStorage.getItem("imagePositions")) || {};
 
 document.addEventListener("DOMContentLoaded", () => {
   const imageContainer = document.getElementById("image-container");
-  const tiers = document.querySelectorAll(".tier");
+  const tiers = document.querySelectorAll(".tier-content");
   const resetButton = document.getElementById("reset-button");
 
   // Bilddaten laden (Beispiel-Bilder)
-  const images = ["img1.png", "img2.png", "img3.png", "img4.png"]; // Pfade zu den Bilddateien
+  const images = ["img1.png", "img2.png", "img3.png", "img4.png", "img5.png", "img6.png", "img7.png", "img8.png", "img9.png", "img10.png", "img11.png"]; // Pfade zu den Bilddateien
 
   // Bilder in den Container laden
   images.forEach((imgSrc) => {
@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
       localStorage.setItem("imagePositions", JSON.stringify(imagePositions));
     }
     // Überprüfen, ob das Ziel eine "tier"-Klasse hat
-    else if (event.target.classList.contains("tier")) {
+    else if (event.target.classList.contains("tier-content")) {
       // Wenn das Ziel ein Tierlist-Container ist, füge das Bild dort ein
       event.target.appendChild(draggableElement);
       // Position speichern
@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Überprüfen, ob auf ein Bild in der Tierlist gedroppt wurde
     else if (event.target.tagName.toLowerCase() === "img") {
       // Finde das übergeordnete "tier"-Element des Zielbildes
-      const parentTier = event.target.closest(".tier"); // Sucht das nächste übergeordnete Element mit der Klasse "tier"
+      const parentTier = event.target.closest(".tier-content"); // Sucht das nächste übergeordnete Element mit der Klasse "tier"
       if (parentTier) {
         parentTier.appendChild(draggableElement); // Füge das Bild in das übergeordnete Tier-Element ein
         // Position speichern
@@ -94,7 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function restorePositions() {
     for (const [id, tier] of Object.entries(imagePositions)) {
       const img = document.getElementById(id);
-      const tierElement = document.querySelector(`.tier[data-tier="${tier}"]`);
+      const tierElement = document.querySelector(`.tier-content[data-tier="${tier}"]`);
       if (tierElement && img) {
         tierElement.appendChild(img);
       }
