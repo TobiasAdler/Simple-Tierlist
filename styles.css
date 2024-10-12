@@ -1,17 +1,19 @@
 body {
+  margin: 0;
+  padding: 0;
   font-family: Arial, sans-serif;
   text-align: center;
   display: flex;
   justify-content: center;
   margin-top: 20px;
-  width: 90%;
+  width: 100%;
 }
 
 .container {
   display: flex;
-  width: 90%;
+  width: 70%;
   flex-direction: column;
-  align-items: center;
+  justify-content: center;
 }
 
 .image-container {
@@ -19,9 +21,8 @@ body {
   flex-wrap: wrap;
   margin-bottom: 20px;
   border: 1px solid #ccc;
-  padding: 10px;
   min-height: 120px;
-  width: 1000px;
+  width: 100%;
   justify-content: left;
 }
 
@@ -47,7 +48,7 @@ img {
   min-width: 100px;
   min-height: 100px;
   height: auto;
-  background-color: #ff4c4c;
+  background-color: #EA1C1C;
   color: white;
   font-size: 24px;
   font-weight: bold;
@@ -57,16 +58,19 @@ img {
   padding: 10px;
 }
 .tier-row[data-tier="A"] .tier-label {
-  background-color: #ff8c00;
+  background-color: #D88100;
 }
 .tier-row[data-tier="B"] .tier-label {
-  background-color: #ffd700;
+  background-color: #ECAA00;
 }
 .tier-row[data-tier="C"] .tier-label {
-  background-color: #adff2f;
+  background-color: #E0D80A;
 }
 .tier-row[data-tier="D"] .tier-label {
-  background-color: #32cd32;
+  background-color: #A7BA80;
+}
+.tier-row[data-tier="E"] .tier-label {
+  background-color: #80ACBA;
 }
 
 .tier-content {
@@ -76,7 +80,7 @@ img {
   /* padding: 10px; */
   background-color: #f0f0f0;
   border: 1px solid #ddd;
-  width: 1000px; /* Feste Breite für den Tier-Container */
+  width: 100%; /* Feste Breite für den Tier-Container */
   /* min-width: 120px; */
   min-height: 120px;
   box-sizing: border-box; /* Stellt sicher, dass Padding zur Breite zählt */
