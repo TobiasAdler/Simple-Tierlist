@@ -49,36 +49,46 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Überprüfen, ob das Ziel der Bildcontainer ist
     if (event.target.id === "image-container") {
-      const parentContainer = event.target.closest("#image-container"); // Sucht das nächste übergeordnete Element mit der Klasse "tier"
-      if (parentContainer) {
-        parentContainer.appendChild(draggableElement); // Füge das Bild in das übergeordnete Tier-Element ein
-      }
       // Füge das Bild zurück in den Bildcontainer
       event.target.appendChild(draggableElement);
       // Entferne die Position des Bildes aus dem localStorage
       delete imagePositions[id];
       localStorage.setItem("imagePositions", JSON.stringify(imagePositions));
     }
-    // Überprüfen, ob das Ziel-Element eine "tier"-Klasse hat
+    // Überprüfen, ob auf ein Bild im Bildcontainer gedroppt wurde
+    else if (
+      event.target.tagName.toLowerCase() === "img" &&
+      event.target.closest("#image-container")
+    ) {
+      // Füge das Bild in den Bildcontainer zurück, wenn auf ein Bild im Container gedroppt wird
+      const imageContainer = event.target.closest("#image-container");
+      imageContainer.appendChild(draggableElement);
+      // Entferne die Position des Bildes aus dem localStorage
+      delete imagePositions[id];
+      localStorage.setItem("imagePositions", JSON.stringify(imagePositions));
+    }
+    // Überprüfen, ob das Ziel eine "tier"-Klasse hat
     else if (event.target.classList.contains("tier")) {
       // Wenn das Ziel ein Tierlist-Container ist, füge das Bild dort ein
       event.target.appendChild(draggableElement);
+      // Position speichern
+      imagePositions[id] = event.target.dataset.tier;
+      localStorage.setItem("imagePositions", JSON.stringify(imagePositions));
     }
-    // Überprüfen, ob das Ziel ein Bild ist
+    // Überprüfen, ob auf ein Bild in der Tierlist gedroppt wurde
     else if (event.target.tagName.toLowerCase() === "img") {
       // Finde das übergeordnete "tier"-Element des Zielbildes
       const parentTier = event.target.closest(".tier"); // Sucht das nächste übergeordnete Element mit der Klasse "tier"
       if (parentTier) {
         parentTier.appendChild(draggableElement); // Füge das Bild in das übergeordnete Tier-Element ein
+        // Position speichern
+        imagePositions[id] = parentTier.dataset.tier;
+        localStorage.setItem("imagePositions", JSON.stringify(imagePositions));
       }
     } else {
       console.log("Ungültiges Drop-Ziel");
       return; // Beenden, wenn das Ziel kein gültiges Drop-Ziel ist
     }
-
-    // Position speichern (Tier-Container)
-    imagePositions[id] = draggableElement.parentElement.dataset.tier;
-    localStorage.setItem("imagePositions", JSON.stringify(imagePositions));
   }
 
   function restorePositions() {
